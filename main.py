@@ -2,7 +2,7 @@ from math import gcd
 from random import getrandbits, randint
 
 
-def isPrime(a):
+def is_prime(a):
     return all(a % i for i in range(2, a))
 
 
@@ -22,9 +22,9 @@ def factorize(n):
     return factors
 
 
-def calculateLegendre(a, p):
+def calculate_legendre(a, p):
     if a >= p or a < 0:
-        return calculateLegendre(a % p, p)
+        return calculate_legendre(a % p, p)
     elif a == 0 or a == 1:
         return a
     elif a == 2:
@@ -37,17 +37,17 @@ def calculateLegendre(a, p):
             return 1
         else:
             return -1
-    elif not isPrime(a):
+    elif not is_prime(a):
         factors = factorize(a)
         product = 1
         for pi in factors:
-            product *= calculateLegendre(pi, p)
+            product *= calculate_legendre(pi, p)
         return product
     else:
         if ((p - 1) / 2) % 2 == 0 or ((a - 1) / 2) % 2 == 0:
-            return calculateLegendre(p, a)
+            return calculate_legendre(p, a)
         else:
-            return (-1) * calculateLegendre(p, a)
+            return (-1) * calculate_legendre(p, a)
 
 
 def solovay_strassen_primality_test(n, a):
@@ -56,7 +56,7 @@ def solovay_strassen_primality_test(n, a):
     an = pow(a, (n - 1) // 2, n)
     if an == (n - 1):
         an = -1
-    if not (isPrime(n) and an == calculateLegendre(a, n)):
+    if not (is_prime(n) and an == calculate_legendre(a, n)):
         return 'Not prime'
     return 'Prime'
 
